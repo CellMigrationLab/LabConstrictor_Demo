@@ -1,34 +1,29 @@
-name: UNDERSCORED_PROJECT_NAME
-version: VERSION_NUMBER
-
+name: LabConstrictor_Demo
+version: 0.0.0
 environment_file: environment.yaml
 installer_type: all
 license_file: LICENSE
-
-welcome_image: WELCOME_IMAGE
-header_image: HEADER_IMAGE
-icon_image: ICON_IMAGE
-
-conclusion_text: 'Thank you! You have successfully installed PROJECT_NAME VERSION_NUMBER.'
-
+welcome_image: app/logo/welcome.png
+header_image: app/logo/header.png
+icon_image: app/logo/logo.png
+conclusion_text: Thank you! You have successfully installed LabConstrictor_Demo 0.0.0.
 keep_pkgs: false
 register_python: false
 initialize_conda: false
-
 extra_files:
 - app/bash_bat_scripts/pre_uninstall.sh: pre_uninstall.sh
 - app/bash_bat_scripts/uninstall.sh: uninstall.sh
-- app/menuinst/Welcome.ipynb: PROJECT_NAME/notebooks/Welcome.ipynb
-- app/menuinst/notebook_launcher.json: PROJECT_NAME/notebook_launcher.json
-- app/python_scripts/hide_code_cells.py: PROJECT_NAME/hide_code_cells.py
-- app/python_scripts/include_path.py: PROJECT_NAME/include_path.py
-- notebooks/notebook_latest_versions.yaml: PROJECT_NAME/notebook_latest_versions.yaml
-- requirements.txt: PROJECT_NAME/requirements.txt
-- construct.yaml: PROJECT_NAME/construct.yaml
-
+- app/logo/logo.icns: LabConstrictor_Demo/logo.icns
+- app/logo/logo.ico: LabConstrictor_Demo/logo.ico
+- app/logo/logo.png: LabConstrictor_Demo/logo.png
+- app/menuinst/Welcome.ipynb: LabConstrictor_Demo/notebooks/Welcome.ipynb
+- app/menuinst/notebook_launcher.json: LabConstrictor_Demo/notebook_launcher.json
+- app/python_scripts/hide_code_cells.py: LabConstrictor_Demo/hide_code_cells.py
+- app/python_scripts/include_path.py: LabConstrictor_Demo/include_path.py
+- construct.yaml: LabConstrictor_Demo/construct.yaml
+- notebooks/notebook_latest_versions.yaml: LabConstrictor_Demo/notebook_latest_versions.yaml
+- requirements.txt: LabConstrictor_Demo/requirements.txt
 post_install: app/bash_bat_scripts/post_install.bat # [win]
 post_install: app/bash_bat_scripts/post_install.sh # [unix]
-
 pre_uninstall: app/bash_bat_scripts/pre_uninstall.bat # [win]
 pre_uninstall: app/bash_bat_scripts/pre_uninstall.sh # [unix]
-
