@@ -1,5 +1,5 @@
 name: LabConstrictor_Demo
-version: 0.0.0
+version: 0.0.1
 environment_file: environment.yaml
 installer_type: all
 license_file: LICENSE
@@ -11,6 +11,7 @@ keep_pkgs: false
 register_python: false
 initialize_conda: false
 extra_files:
+- .tools/meta/src_change.yaml: LabConstrictor_Demo/src_change.yaml
 - app/bash_bat_scripts/pre_uninstall.sh: pre_uninstall.sh
 - app/bash_bat_scripts/uninstall.sh: uninstall.sh
 - app/logo/logo.icns: LabConstrictor_Demo/logo.icns
@@ -21,8 +22,13 @@ extra_files:
 - app/python_scripts/hide_code_cells.py: LabConstrictor_Demo/hide_code_cells.py
 - app/python_scripts/include_path.py: LabConstrictor_Demo/include_path.py
 - construct.yaml: LabConstrictor_Demo/construct.yaml
+- notebooks/Image_Preview/Image_Preview.ipynb: LabConstrictor_Demo/notebooks/Image_Preview/Image_Preview.ipynb
 - notebooks/notebook_latest_versions.yaml: LabConstrictor_Demo/notebook_latest_versions.yaml
 - requirements.txt: LabConstrictor_Demo/requirements.txt
+- setup.py: LabConstrictor_Demo/setup.py
+- src/__init__.py: LabConstrictor_Demo/src/labconstrictor_demo/__init__.py
+- src/image_utils.py: LabConstrictor_Demo/src/labconstrictor_demo/image_utils.py
+- src/widget_utils.py: LabConstrictor_Demo/src/labconstrictor_demo/widget_utils.py
 post_install: app/bash_bat_scripts/post_install.bat # [win]
 post_install: app/bash_bat_scripts/post_install.sh # [unix]
 pre_uninstall: app/bash_bat_scripts/pre_uninstall.bat # [win]
