@@ -1,0 +1,11 @@
+dependencies:
+- ipywidgets==8.1.7
+- PyYAML==6.0.2
+- requests==2.32.5
+- numpy==2.3.3
+- pillow==11.3.0
+description: This notebook allows to open an image and visualise it.
+linux_dependencies: []
+macos_dependencies: []
+python_version: 3.11.13
+windows_dependencies: []
