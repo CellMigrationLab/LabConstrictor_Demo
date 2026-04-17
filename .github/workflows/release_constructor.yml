@@ -92,14 +92,6 @@ jobs:
             runner: macos-15
           - os_name: macos-intel
             runner: macos-15-intel
-          - os_name: macos-14-arm64
-            runner: macos-14
-          - os_name: macos-14-intel
-            runner: macos-14-large
-          - os_name: macos-13-arm64
-            runner: macos-13-xlarge
-          - os_name: macos-13-intel
-            runner: macos-13
           - os_name: windows
             runner: windows-latest
     defaults:
@@ -179,17 +171,6 @@ jobs:
             "build_installer_with_constructor.sh" \
             .tools/bash/build_installer_with_constructor.sh \
             bash .tools/bash/build_installer_with_constructor.sh
-
-      - name: Rename installer to include OS name
-        run: |
-          for f in "${{ env.OUTPUT_DIR }}"/*; do
-            [ -f "$f" ] || continue
-            dir=$(dirname "$f")
-            base=$(basename "$f")
-            ext="${base##*.}"
-            name="${base%.*}"
-            mv "$f" "$dir/${name}-${{ matrix.os_name }}.${ext}"
-          done
 
       - name: Upload diagnostics
         if: always()
