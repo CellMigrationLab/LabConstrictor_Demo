@@ -10,3 +10,7 @@ Internal documentation on how to upload notebooks or create executables is avail
 ## Download
 
 Upon release the downloadable assets will be available [here](.tools/docs/download_executable.md).
+
+## 🔄 Automatic Template Updates
+
+LabConstrictor can prepare pull requests that keep this repository aligned with improvements in the main template, including updates to GitHub Actions workflows. Complete the one-time [automatic synchronization setup](.tools/docs/template_synchronization.md) to enable these updates.
