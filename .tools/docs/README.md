@@ -59,3 +59,7 @@ If you use LabConstrictor in your research, please cite the project to support i
 *(Citation details coming soon)*
 
 
+
+## GitHub management
+
+- [Configure automatic template synchronization](template_synchronization.md)

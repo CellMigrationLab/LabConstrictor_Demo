@@ -21,10 +21,12 @@ extra_files:
 - app/menuinst/notebook_launcher.json: LabConstrictor_Demo/notebook_launcher.json
 - app/python_scripts/hide_code_cells.py: LabConstrictor_Demo/hide_code_cells.py
 - app/python_scripts/include_path.py: LabConstrictor_Demo/include_path.py
+- app/python_scripts/launch_jupyter.py: LabConstrictor_Demo/launch_jupyter.py
 - construct.yaml: LabConstrictor_Demo/construct.yaml
 - notebooks/Image_Preview/Image_Preview.ipynb: LabConstrictor_Demo/notebooks/Image_Preview/Image_Preview.ipynb
 - notebooks/notebook_latest_versions.yaml: LabConstrictor_Demo/notebook_latest_versions.yaml
 - requirements.txt: LabConstrictor_Demo/requirements.txt
+- requirements_gpu.txt: LabConstrictor_Demo/requirements_gpu.txt
 - setup.py: LabConstrictor_Demo/setup.py
 - src/__init__.py: LabConstrictor_Demo/src/labconstrictor_demo/__init__.py
 - src/image_utils.py: LabConstrictor_Demo/src/labconstrictor_demo/image_utils.py
