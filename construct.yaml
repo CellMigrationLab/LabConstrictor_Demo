@@ -1,5 +1,5 @@
 name: LabConstrictor_Demo
-version: 0.0.1
+version: 0.0.2
 environment_file: environment.yaml
 installer_type: all
 license_file: LICENSE
@@ -11,7 +11,6 @@ keep_pkgs: false
 register_python: false
 initialize_conda: false
 extra_files:
-- .tools/meta/src_change.yaml: LabConstrictor_Demo/src_change.yaml
 - app/bash_bat_scripts/pre_uninstall.sh: pre_uninstall.sh
 - app/bash_bat_scripts/uninstall.sh: uninstall.sh
 - app/logo/logo.icns: LabConstrictor_Demo/logo.icns
@@ -28,9 +27,9 @@ extra_files:
 - requirements.txt: LabConstrictor_Demo/requirements.txt
 - requirements_gpu.txt: LabConstrictor_Demo/requirements_gpu.txt
 - setup.py: LabConstrictor_Demo/setup.py
-- src/__init__.py: LabConstrictor_Demo/src/labconstrictor_demo/__init__.py
-- src/image_utils.py: LabConstrictor_Demo/src/labconstrictor_demo/image_utils.py
-- src/widget_utils.py: LabConstrictor_Demo/src/labconstrictor_demo/widget_utils.py
+- src/__init__.py: LabConstrictor_Demo/src/__init__.py
+- src/image_utils.py: LabConstrictor_Demo/src/image_utils.py
+- src/widget_utils.py: LabConstrictor_Demo/src/widget_utils.py
 post_install: app/bash_bat_scripts/post_install.bat # [win]
 post_install: app/bash_bat_scripts/post_install.sh # [unix]
 pre_uninstall: app/bash_bat_scripts/pre_uninstall.bat # [win]
