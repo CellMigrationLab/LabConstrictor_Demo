@@ -22,8 +22,20 @@ PKG_VERSION_RE = re.compile(r'^(\s*SET\s+"PKG_VERSION=)(\d+\.\d+\.\d+)("\s*)$', 
 POST_INSTALL = ROOT / "app" / "bash_bat_scripts" / "post_install.bat"
 
 def replace_version_placeholder(text: str, new_version: str) -> str:
-    """ Replace version placeholders 'VERSION_NUMBER' in the text with the new version."""
-    return text.replace("VERSION_NUMBER", new_version)
+    """Render the release version in download documentation.
+
+    Handles both pristine templates containing ``VERSION_NUMBER`` and
+    initialized repositories where that placeholder was already rendered to an
+    older explicit version such as ``0.0.0``.
+    """
+    explicit_versions = set(
+        re.findall(r"/releases/download/(\d+\.\d+\.\d+)/", text)
+    )
+
+    text = text.replace("VERSION_NUMBER", new_version)
+    for previous_version in explicit_versions:
+        text = text.replace(previous_version, new_version)
+    return text
 
 def replace_version_in_file(file_path: pathlib.Path, old_version: str, new_version: str) -> bool:
     """Replace all occurrences of old_version with new_version in a file.
@@ -108,11 +120,18 @@ def bump_construct_text(text: str, old_version: str, new_version: str) -> str:
         if "VERSION_NUMBER" in body:
             updated_body = body.replace("VERSION_NUMBER", new_version)
         else:
-            updated_body = body.replace(old_version, new_version)
+            updated_body = re.sub(
+                r"\b\d+\.\d+\.\d+\b",
+                new_version,
+                body,
+                count=1,
+            )
         return f"{m.group(1)}{quote}{updated_body}{quote}{m.group('trailing')}"
 
     text = CONCLUSION_LINE_RE.sub(_repl_conclusion, text, count=1)
     return text
+
+
 def bump_post_install_bat(new_version: str) -> None:
     if not POST_INSTALL.exists():
         return
@@ -122,7 +141,6 @@ def bump_post_install_bat(new_version: str) -> None:
     updated = PKG_VERSION_RE.sub(lambda m: f"{m.group(1)}{new_version}{m.group(3)}", text, count=1)
     POST_INSTALL.write_text(updated, encoding="utf-8")
     print(f"Updated post_install.bat PKG_VERSION to {new_version}")
-
 
 def bump_version_in_download_executable_md(new_version: str) -> None:
     possible_download_md_paths = [
@@ -144,7 +162,7 @@ def bump_version_in_download_executable_md(new_version: str) -> None:
             else:
                 print("Template for download_executable.md not found! Skipping creation of download_executable.md")
                 return
-
+            
             # This file contains placeholders, update them with the new version
             text = download_md.read_text(encoding="utf-8")
             updated_text = replace_version_placeholder(text, new_version)
@@ -153,6 +171,7 @@ def bump_version_in_download_executable_md(new_version: str) -> None:
                 print(f"Updated download_executable.md to version {new_version}")
             else:
                 print("No version string found in download_executable.md to update.")
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Update project version across release artifacts.",
@@ -177,14 +196,16 @@ def main() -> None:
         sys.exit("Version must look like X.Y.Z")
 
     text, current = read_current_version()
-    if args.new_version == current:
-        print(f"Version already at {current}; nothing to update.")
-        return
-
     updated_text = bump_construct_text(text, current, args.new_version)
 
-    CONSTRUCT.write_text(updated_text, encoding="utf-8")
-    print(f"Bumped {current} -> {args.new_version}")
+    if updated_text != text:
+        CONSTRUCT.write_text(updated_text, encoding="utf-8")
+        print(f"Bumped {current} -> {args.new_version}")
+    else:
+        print(
+            f"Project version already at {args.new_version}; "
+            "checking dependent versioned files."
+        )
 
     # Also bump PKG_VERSION in post_install.bat
     bump_post_install_bat(args.new_version)
