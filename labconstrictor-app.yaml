@@ -11,3 +11,11 @@ distribution:
 license: MIT
 categories: [example]
 icon: app/logo/logo.png
+inputs:
+  - "One image file at a time, chosen from disk with the Upload image button"
+outputs:
+  - "A preview of the image in the notebook, with a line giving its name, size in pixels and mode"
+quickstart:
+  - "Run the cell that checks the notebook's version"
+  - "Run the cell that imports the main functionalities of the notebook"
+  - "Run the cell that creates the image uploader, then click Upload image and pick an image from disk"
