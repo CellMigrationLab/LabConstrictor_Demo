@@ -15,7 +15,14 @@
       ],
       "platforms": {
         "win": {
-          "icon": "BASE_PATH_KEYWORD/LabConstrictor_Demo/logo.ico"
+          "icon": "BASE_PATH_KEYWORD/LabConstrictor_Demo/logo.ico",
+          "command": [
+            "{{ PYTHON }}",
+            "{{ PREFIX }}/LabConstrictor_Demo/launch_jupyter.py",
+            "{{ PREFIX }}/LabConstrictor_Demo/notebooks/Welcome.ipynb",
+            "&",
+            "exit"
+          ]
         },
         "linux": {
           "icon": "BASE_PATH_KEYWORD/LabConstrictor_Demo/logo.png"

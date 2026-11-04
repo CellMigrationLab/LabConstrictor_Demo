@@ -115,6 +115,37 @@ def ensure_requirements_in_extra_files(construct_data: dict):
 
     # Update the construct data with the modified extra_files
     construct_data["extra_files"] = extra_files
+LOCK_FILES = (
+    "requirements.lock.txt",
+    "requirements_gpu.lock.txt",
+    "requirements-linux.lock.txt",
+    "requirements-windows.lock.txt",
+    "requirements-macos.lock.txt",
+)
+
+
+def ensure_lock_files_in_extra_files(construct_data: dict) -> None:
+    """Bundle the lock files (requirements*.lock.txt, written by lock_requirements.py) next to their requirements files.
+
+    post_install installs a lock file instead of its requirements file when the installer bundles one. A mapping whose lock file is gone
+    (the requirements could not be locked) is removed, because constructor fails on a missing file.
+    """
+    extra_files = construct_data.setdefault("extra_files", [])
+    project_folder = extract_project_folder(extra_files)
+    for lock_file in LOCK_FILES:
+        mapped = [item for item in extra_files if isinstance(item, dict) and lock_file in item]
+        if Path(lock_file).exists():
+            if not mapped:
+                extra_files.append({lock_file: f"{project_folder}/{lock_file}"})
+                debug(f"Added mapping for {lock_file}")
+            else:
+                debug(f"{lock_file} mapping already present")
+        elif mapped:
+            for item in mapped:
+                extra_files.remove(item)
+            debug(f"Removed the mapping of {lock_file}: the file does not exist (the installer installs the requirements file instead)")
+
+
 def ensure_extra_files(construct_data: dict, notebooks_root: Path, src_root: Path) -> int:
     extra_files = construct_data.get("extra_files")
     if extra_files is None:
@@ -221,13 +252,12 @@ def ensure_extra_files(construct_data: dict, notebooks_root: Path, src_root: Pat
         # Include the external code change tracking file if it exists
         src_change_file = ".tools/meta/src_change.yaml"
         if Path(src_change_file).exists():
+            # The mapping was removed from normalized_items above, so always re-add it here;
+            # checking existing_sources would drop it on every other release.
             src_change_dst = f"{project_folder}/src_change.yaml"
-            if src_change_file not in existing_sources and src_change_dst not in existing_dests:
-                normalized_items.append({src_change_file: src_change_dst})
-                src_added += 1
-                debug(f"Included src change marker: {src_change_file} -> {src_change_dst}")
-            else:
-                debug("src change marker mapping already present")
+            normalized_items.append({src_change_file: src_change_dst})
+            src_added += 1
+            debug(f"Included src change marker: {src_change_file} -> {src_change_dst}")
         else:
             debug("src change marker not found, skipping")
     else:
@@ -270,6 +300,7 @@ def main():
     data = load_construct(construct_path)
     # Check if the requirements files are included in extra_files, if not, add them
     ensure_requirements_in_extra_files(data)
+    ensure_lock_files_in_extra_files(data)
 
     # Update extra_files with notebooks and src files
     ntbk_added, src_added = ensure_extra_files(data, notebooks_root, src_root)
