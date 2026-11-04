@@ -1,12 +1,12 @@
 name: LabConstrictor_Demo
-version: 0.0.3
+version: 0.0.4
 environment_file: environment.yaml
 installer_type: all
 license_file: LICENSE
 welcome_image: app/logo/welcome.png
 header_image: app/logo/header.png
 icon_image: app/logo/logo.png
-conclusion_text: Thank you! You have successfully installed LabConstrictor_Demo 0.0.3.
+conclusion_text: Thank you! You have successfully installed LabConstrictor_Demo 0.0.4.
 keep_pkgs: false
 register_python: false
 initialize_conda: false
@@ -23,6 +23,7 @@ extra_files:
 - app/python_scripts/include_path.py: LabConstrictor_Demo/include_path.py
 - app/python_scripts/launch_jupyter.py: LabConstrictor_Demo/launch_jupyter.py
 - construct.yaml: LabConstrictor_Demo/construct.yaml
+- labconstrictor-app.yaml: LabConstrictor_Demo/labconstrictor-app.yaml
 - notebooks/Image_Preview/Image_Preview.ipynb: LabConstrictor_Demo/notebooks/Image_Preview/Image_Preview.ipynb
 - notebooks/notebook_latest_versions.yaml: LabConstrictor_Demo/notebook_latest_versions.yaml
 - requirements.txt: LabConstrictor_Demo/requirements.txt
@@ -31,7 +32,6 @@ extra_files:
 - src/labconstrictor_demo/__init__.py: LabConstrictor_Demo/src/labconstrictor_demo/__init__.py
 - src/labconstrictor_demo/image_utils.py: LabConstrictor_Demo/src/labconstrictor_demo/image_utils.py
 - src/labconstrictor_demo/widget_utils.py: LabConstrictor_Demo/src/labconstrictor_demo/widget_utils.py
-- labconstrictor-app.yaml: LabConstrictor_Demo/labconstrictor-app.yaml
 post_install: app/bash_bat_scripts/post_install.bat # [win]
 post_install: app/bash_bat_scripts/post_install.sh # [unix]
 pre_uninstall: app/bash_bat_scripts/pre_uninstall.bat # [win]
